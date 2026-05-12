@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YieldSmart Fertilizer Recommendation</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- 🌌 Background -->
+  <div id="three-container"></div>
+  <div id="bg-image"></div>
+
+  <!-- 📦 Main UI -->
+  <div class="container">
+    <div class="content-overlay">
+
+      <!-- 🔝 Header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h1 data-i18n="title_fert">🌾 YieldSmart Fertilizer Recommendation Tool</h1>
+
+        <select id="langSelect" aria-label="Language selector">
+          <option value="en">EN</option>
+          <option value="hi">HI</option>
+        </select>
+      </div>
+
+      <!-- 📋 Form -->
+      <form id="fertilizerForm" autocomplete="off">
+
+        <label>
+          <span data-i18n="fert_location">Location</span>
+          <input type="text" name="Location" placeholder="e.g. Kolkata" required />
+        </label>
+
+        <label>
+          <span data-i18n="fert_crop">Crop Type</span>
+          <input type="text" name="Crop_Type" placeholder="e.g. rice" required />
+        </label>
+
+        <label>
+          <span data-i18n="fert_soil">Soil Type</span>
+          <select name="Soil_Type" required>
+            <option value="">-- Select Soil Type --</option>
+            <option value="Peaty">Peaty</option>
+            <option value="Loamy">Loamy</option>
+            <option value="Sandy">Sandy</option>
+            <option value="Saline">Saline</option>
+            <option value="Clay">Clay</option>
+          </select>
+        </label>
+
+        <label>
+          <span data-i18n="fert_yield">Crop Yield (kg/ha)</span>
+          <input type="number" name="Crop_Yield" step="0.1" required />
+        </label>
+
+        <button id="fertSubmit" type="submit" data-i18n="fert_button">
+          Get Recommendation
+        </button>
+
+      </form>
+
+      <!-- ⏳ Loader -->
+      <div id="loader"></div>
+
+      <!-- 📈 Result -->
+      <div id="result"></div>
+
+      <!-- 🔗 Link back to Prediction -->
+      <a id="predictLink" class="btn" href="http://localhost:5000/" data-i18n="go_to_predict">
+        Go to Crop Yield Prediction page
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ⚙️ Scripts -->
+  <script type="module">
+    import { init } from './i18n.js';
+    import { ThreeBG } from './three.js';
+
+    init('en');
+
+    window.addEventListener('load', () => {
+      const threeBG = new ThreeBG('three-container');
+      window.addEventListener('resize', () => threeBG.handleResize());
+    });
+
+    import('./script.js');
+  </script>
+
+</body>
+</html>
