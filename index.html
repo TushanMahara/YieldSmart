@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YieldSmart Fertilizer Recommendation</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YieldSmart Crop Yield Predictor</title>
 
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
@@ -21,7 +24,7 @@
 
       <!-- 🔝 Header -->
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <h1 data-i18n="title_fert">🌾 YieldSmart Fertilizer Recommendation Tool</h1>
+        <h1 data-i18n="title_predict">🌱 YieldSmart Crop Yield Prediction</h1>
 
         <select id="langSelect" aria-label="Language selector">
           <option value="en">EN</option>
@@ -30,20 +33,15 @@
       </div>
 
       <!-- 📋 Form -->
-      <form id="fertilizerForm" autocomplete="off">
+      <form id="predictForm" autocomplete="off">
 
         <label>
-          <span data-i18n="fert_location">Location</span>
-          <input type="text" name="Location" placeholder="e.g. Kolkata" required />
-        </label>
-
-        <label>
-          <span data-i18n="fert_crop">Crop Type</span>
+          <span data-i18n="cropType">Crop Type</span>
           <input type="text" name="Crop_Type" placeholder="e.g. rice" required />
         </label>
 
         <label>
-          <span data-i18n="fert_soil">Soil Type</span>
+          <span data-i18n="soilType">Soil Type</span>
           <select name="Soil_Type" required>
             <option value="">-- Select Soil Type --</option>
             <option value="Peaty">Peaty</option>
@@ -55,15 +53,35 @@
         </label>
 
         <label>
-          <span data-i18n="fert_yield">Crop Yield (kg/ha)</span>
-          <input type="number" name="Crop_Yield" step="0.1" required />
+          <span data-i18n="nLabel">N (Nitrogen)</span>
+          <input type="number" name="N" step="0.01" required />
         </label>
 
-        <button id="fertSubmit" type="submit" data-i18n="fert_button">
-          Get Recommendation
+        <label>
+          <span data-i18n="pLabel">P (Phosphorus)</span>
+          <input type="number" name="P" step="0.01" required />
+        </label>
+
+        <label>
+          <span data-i18n="kLabel">K (Potassium)</span>
+          <input type="number" name="K" step="0.01" required />
+        </label>
+
+        <label>
+          <span data-i18n="locationLabel">Location (City)</span>
+          <input type="text" id="locationInput" name="Location" placeholder="e.g. Kolkata" required />
+        </label>
+
+        <button id="submitButton" type="submit" data-i18n="predictButton">
+          Predict Yield
         </button>
 
       </form>
+
+      <!-- 📊 Status -->
+      <div id="status" data-i18n="status_default">
+        Enter details and click Predict Yield.
+      </div>
 
       <!-- ⏳ Loader -->
       <div id="loader"></div>
@@ -71,9 +89,9 @@
       <!-- 📈 Result -->
       <div id="result"></div>
 
-      <!-- 🔗 Link back to Prediction -->
-      <a id="predictLink" class="btn" href="../index.html" data-i18n="go_to_predict">
-        Go to Crop Yield Prediction page
+      <!-- 🔗 Link to Fertilizer Recommendation -->
+      <a id="fertLink" class="btn" href="./simple%20webpage%20reverse/index.html" data-i18n="link_fertiliser">
+        Click here to get Fertiliser recommendation
       </a>
 
     </div>
