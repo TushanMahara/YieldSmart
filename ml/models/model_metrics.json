@@ -1,0 +1,95 @@
+{
+  "yield_model": {
+    "model_name": "Random Forest Regressor (Yield Prediction)",
+    "features": [
+      "Crop_Type",
+      "Soil_Type",
+      "Temperature",
+      "Humidity",
+      "Wind_Speed",
+      "N",
+      "P",
+      "K"
+    ],
+    "target": "Crop_Yield",
+    "train_r2": 0.9966258055368912,
+    "test_r2": 0.9744631965805498,
+    "test_rmse": 4.126578975537957,
+    "test_mae": 2.3883857037830993,
+    "artifact": "yield_pipeline.pkl"
+  },
+  "npk_model": {
+    "model_name": "MultiOutput Random Forest Regressor (NPK Recommendation)",
+    "features": [
+      "Crop_Type",
+      "Soil_Type",
+      "Temperature",
+      "Humidity",
+      "Wind_Speed",
+      "Crop_Yield"
+    ],
+    "targets": [
+      "N",
+      "P",
+      "K"
+    ],
+    "overall_test_r2": 1.0,
+    "n_r2": 1.0,
+    "p_r2": 1.0,
+    "k_r2": 1.0,
+    "n_rmse": 0.0,
+    "p_rmse": 0.0,
+    "k_rmse": 0.0,
+    "artifact": "reverse_yield_pipeline.pkl"
+  },
+  "total_records": 36520,
+  "feature_ranges": {
+    "Temperature": [
+      -3.5401758303833617,
+      54.14891085670428
+    ],
+    "Humidity": [
+      45.85108914329572,
+      80.0
+    ],
+    "Wind_Speed": [
+      -3.3889055812403086,
+      22.606077699297995
+    ],
+    "N": [
+      45.0,
+      91.0
+    ],
+    "P": [
+      36.0,
+      72.0
+    ],
+    "K": [
+      27.0,
+      60.0
+    ],
+    "Crop_Yield": [
+      0.0017611708363326,
+      136.71198172535054
+    ],
+    "crop_types": [
+      "Barley",
+      "Corn",
+      "Cotton",
+      "Potato",
+      "Rice",
+      "Soybean",
+      "Sugarcane",
+      "Sunflower",
+      "Tomato",
+      "Wheat"
+    ],
+    "soil_types": [
+      "Clay",
+      "Loamy",
+      "Peaty",
+      "Saline",
+      "Sandy"
+    ]
+  }
+}

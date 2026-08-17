@@ -1,0 +1,49 @@
+{
+  "Temperature": [
+    -3.5401758303833617,
+    54.14891085670428
+  ],
+  "Humidity": [
+    45.85108914329572,
+    80.0
+  ],
+  "Wind_Speed": [
+    -3.3889055812403086,
+    22.606077699297995
+  ],
+  "N": [
+    45.0,
+    91.0
+  ],
+  "P": [
+    36.0,
+    72.0
+  ],
+  "K": [
+    27.0,
+    60.0
+  ],
+  "Crop_Yield": [
+    0.0017611708363326,
+    136.71198172535054
+  ],
+  "crop_types": [
+    "Barley",
+    "Corn",
+    "Cotton",
+    "Potato",
+    "Rice",
+    "Soybean",
+    "Sugarcane",
+    "Sunflower",
+    "Tomato",
+    "Wheat"
+  ],
+  "soil_types": [
+    "Clay",
+    "Loamy",
+    "Peaty",
+    "Saline",
+    "Sandy"
+  ]
+}
