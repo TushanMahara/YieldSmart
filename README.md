@@ -32,7 +32,7 @@ YieldSmart is an intelligent agricultural assistant designed to help farmers and
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/UtsabDuttaHere/Crop_Yeild.git
+   git clone https://github.com/tushanmahara/Crop_Yeild.git
    cd Crop_Yeild
    ```
 
