@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YieldSmart AI — Crop Yield Prediction & Fertilizer Optimization</title>
+  <meta name="description" content="AI-Powered Agricultural Decision Engine combining Random Forest ML models, live weather data, and 3D visualization for precision harvest forecasting." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+  <!-- 🌌 3D Three.js Background Canvas & Gradient Fallback -->
+  <div id="three-container"></div>
+  <div id="bg-fallback"></div>
+
+  <!-- 🧭 Sticky Navigation Bar -->
+  <header class="navbar">
+    <a href="#" class="nav-brand" onclick="window.switchTab('tab-home'); return false;">
+      <span class="brand-icon">🌱</span>
+      <span class="brand-title" data-i18n="brand_title">YieldSmart AI</span>
+    </a>
+
+    <ul class="nav-tabs" role="tablist">
+      <li>
+        <button class="nav-tab-btn active" data-tab="tab-home" data-i18n="nav_home">
+          🏠 Home
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" data-tab="tab-predict" data-i18n="nav_predict">
+          🌾 Crop Yield Predictor
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" data-tab="tab-fertilizer" data-i18n="nav_fertilizer">
+          🧪 Fertilizer Optimizer
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" data-tab="tab-weather" data-i18n="nav_weather">
+          🌤️ Live Weather
+        </button>
+      </li>
+      <li>
+        <button class="nav-tab-btn" data-tab="tab-about" data-i18n="nav_about">
+          📊 ML Architecture
+        </button>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" aria-label="Language selector">
+          <option value="en">🌐 English (EN)</option>
+          <option value="hi">🇮🇳 हिन्दी (HI)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- 📦 Main Application Container -->
+  <main class="main-wrapper">
+
+    <!-- =========================================================
+         TAB 1: HOME / HERO
+    ========================================================= -->
+    <section id="tab-home" class="tab-pane active">
+      <div class="hero-section">
+        <div class="badge-pill" data-i18n="hero_badge">
+          🌾 AI-Powered Agricultural Decision Engine
+        </div>
+
+        <h1 class="hero-title" data-i18n="hero_title">
+          Precision Crop Yield Prediction & Fertilizer Optimization
+        </h1>
+
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
+          Harness the power of Machine Learning and real-time meteorology to forecast crop harvests and optimize N-P-K nutrient management with scientific precision.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn-primary cta-nav-btn" data-tab="tab-predict" data-i18n="cta_predict">
+            🌾 Predict Crop Yield
+          </button>
+          <button class="btn-secondary cta-nav-btn" data-tab="tab-fertilizer" data-i18n="cta_fertilizer">
+            🧪 Recommend Fertilizer
+          </button>
+        </div>
+
+        <!-- 📈 Stat Highlights Banner -->
+        <div class="stats-banner">
+          <div class="stat-item">
+            <h3>97.5%</h3>
+            <p data-i18n="stat_accuracy">R² Model Accuracy</p>
+          </div>
+          <div class="stat-item">
+            <h3>4.13</h3>
+            <p data-i18n="stat_rmse">RMSE (kg/ha)</p>
+          </div>
+          <div class="stat-item">
+            <h3>36,520</h3>
+            <p data-i18n="stat_records">Training Records</p>
+          </div>
+          <div class="stat-item">
+            <h3>10</h3>
+            <p data-i18n="stat_crops">Supported Crops</p>
+          </div>
+        </div>
+
+        <!-- 🌟 Feature Cards Grid -->
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌳</div>
+            <h3 class="feature-title" data-i18n="feat1_title">Random Forest Yield Forecasting</h3>
+            <p class="feature-desc" data-i18n="feat1_desc">
+              Trained on real agricultural datasets using robust scaling and categorical encoding to forecast harvest yield per hectare.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🧪</div>
+            <h3 class="feature-title" data-i18n="feat2_title">Multi-Output N-P-K Recommender</h3>
+            <p class="feature-desc" data-i18n="feat2_desc">
+              Computes balanced Nitrogen, Phosphorus, and Potassium requirements customized to your target yield and soil condition.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌤️</div>
+            <h3 class="feature-title" data-i18n="feat3_title">Live Open-Meteo Integration</h3>
+            <p class="feature-desc" data-i18n="feat3_desc">
+              Automatically extracts local temperature, atmospheric humidity, and wind velocity for precision weather-informed analysis.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🇮🇳</div>
+            <h3 class="feature-title" data-i18n="feat4_title">Bilingual & Farmer Friendly</h3>
+            <p class="feature-desc" data-i18n="feat4_desc">
+              Full support for English and Hindi with an intuitive, modern responsive interface accessible on all mobile devices.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 2: CROP YIELD PREDICTOR
+    ========================================================= -->
+    <section id="tab-predict" class="tab-pane">
+      <div class="card-layout">
+        <!-- Input Form -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span>🌾</span>
+              <span data-i18n="form_yield_title">Crop Yield Prediction</span>
+            </h2>
+            <p class="card-subtitle" data-i18n="form_yield_subtitle">
+              Enter crop, soil, nutrient levels, and weather parameters to predict expected harvest yield.
+            </p>
+          </div>
+
+          <form id="yieldForm" autocomplete="off">
+            <div class="form-grid">
+              <!-- Crop Type -->
+              <div class="form-group">
+                <label data-i18n="label_crop_type">Crop Type</label>
+                <select name="Crop_Type" class="form-control" required>
+                  <option value="">-- Select Crop --</option>
+                  <option value="Wheat">Wheat</option>
+                  <option value="Corn">Corn</option>
+                  <option value="Rice" selected>Rice</option>
+                  <option value="Barley">Barley</option>
+                  <option value="Soybean">Soybean</option>
+                  <option value="Cotton">Cotton</option>
+                  <option value="Sugarcane">Sugarcane</option>
+                  <option value="Tomato">Tomato</option>
+                  <option value="Potato">Potato</option>
+                  <option value="Sunflower">Sunflower</option>
+                </select>
+              </div>
+
+              <!-- Soil Type -->
+              <div class="form-group">
+                <label data-i18n="label_soil_type">Soil Type</label>
+                <select name="Soil_Type" class="form-control" required>
+                  <option value="">-- Select Soil --</option>
+                  <option value="Loamy" selected>Loamy</option>
+                  <option value="Clay">Clay</option>
+                  <option value="Peaty">Peaty</option>
+                  <option value="Saline">Saline</option>
+                  <option value="Sandy">Sandy</option>
+                </select>
+              </div>
+
+              <!-- City & Auto-fetch -->
+              <div class="form-group full-width">
+                <label data-i18n="label_location">Location (City for Live Weather)</label>
+                <div class="input-with-button">
+                  <input type="text" id="yieldCityInput" class="form-control" placeholder="e.g. Kolkata, Delhi, London" value="Kolkata" />
+                  <button type="button" id="btnFetchYieldWeather" class="btn-fetch" data-i18n="btn_fetch_weather">
+                    ⚡ Auto-Fetch Weather
+                  </button>
+                </div>
+                <div id="yieldWeatherBadge" class="weather-status-badge"></div>
+              </div>
+
+              <!-- Weather Parameters -->
+              <div class="form-group">
+                <label>
+                  <span data-i18n="label_temp">Temperature</span>
+                  <span class="unit">(°C)</span>
+                </label>
+                <input type="number" name="Temperature" class="form-control" step="0.1" value="25.0" required />
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <span data-i18n="label_humidity">Relative Humidity</span>
+                  <span class="unit">(%)</span>
+                </label>
+                <input type="number" name="Humidity" class="form-control" step="0.1" value="65.0" required />
+              </div>
+
+              <div class="form-group full-width">
+                <label>
+                  <span data-i18n="label_wind">Wind Velocity</span>
+                  <span class="unit">(km/h)</span>
+                </label>
+                <input type="number" name="Wind_Speed" class="form-control" step="0.1" value="10.0" required />
+              </div>
+
+              <!-- Macronutrients N-P-K -->
+              <div class="form-group">
+                <label>
+                  <span data-i18n="label_n">Nitrogen (N)</span>
+                  <span class="unit">(kg/ha)</span>
+                </label>
+                <input type="number" name="N" class="form-control" step="0.1" value="70.0" required />
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <span data-i18n="label_p">Phosphorus (P)</span>
+                  <span class="unit">(kg/ha)</span>
+                </label>
+                <input type="number" name="P" class="form-control" step="0.1" value="50.0" required />
+              </div>
+
+              <div class="form-group full-width">
+                <label>
+                  <span data-i18n="label_k">Potassium (K)</span>
+                  <span class="unit">(kg/ha)</span>
+                </label>
+                <input type="number" name="K" class="form-control" step="0.1" value="40.0" required />
+              </div>
+            </div>
+
+            <button type="submit" id="btnYieldSubmit" class="form-submit-btn" data-i18n="btn_predict_yield">
+              🌾 Predict Crop Yield
+            </button>
+          </form>
+        </div>
+
+        <!-- Result Display Card -->
+        <div class="glass-card result-panel">
+          <div id="yieldEmptyState" class="empty-state">
+            <div class="empty-state-icon">🌾</div>
+            <p data-i18n="yield_empty_state">Fill in agricultural parameters to generate an AI prediction.</p>
+          </div>
+
+          <div id="yieldResultDisplay" class="yield-result-display">
+            <span class="result-badge" data-i18n="yield_result_badge">Predicted Crop Yield</span>
+            <div class="yield-number" id="yieldOutputNumber">0.00</div>
+            <div class="yield-unit">Kilograms per Hectare (kg/ha)</div>
+
+            <div class="yield-interpretation" id="yieldInterpretation">
+              Favorable conditions for optimal harvest.
+            </div>
+
+            <div id="yieldWarningsBox" class="warnings-box" style="display: none;"></div>
+
+            <button type="button" id="btnCalcFertForYield" class="btn-primary" style="margin-top: 24px; width: 100%; justify-content: center;" data-i18n="btn_calc_fertilizer_for_yield">
+              🌱 Calculate Fertilizer for this Yield
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 3: FERTILIZER RECOMMENDER
+    ========================================================= -->
+    <section id="tab-fertilizer" class="tab-pane">
+      <div class="card-layout">
+        <!-- Input Form -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span>🧪</span>
+              <span data-i18n="form_fert_title">N-P-K Fertilizer Recommendation</span>
+            </h2>
+            <p class="card-subtitle" data-i18n="form_fert_subtitle">
+              Input your target harvest yield and environmental parameters to receive optimal nutrient recommendations.
+            </p>
+          </div>
+
+          <form id="fertilizerForm" autocomplete="off">
+            <div class="form-grid">
+              <!-- Crop Type -->
+              <div class="form-group">
+                <label data-i18n="label_crop_type">Crop Type</label>
+                <select name="Crop_Type" class="form-control" required>
+                  <option value="">-- Select Crop --</option>
+                  <option value="Wheat" selected>Wheat</option>
+                  <option value="Corn">Corn</option>
+                  <option value="Rice">Rice</option>
+                  <option value="Barley">Barley</option>
+                  <option value="Soybean">Soybean</option>
+                  <option value="Cotton">Cotton</option>
+                  <option value="Sugarcane">Sugarcane</option>
+                  <option value="Tomato">Tomato</option>
+                  <option value="Potato">Potato</option>
+                  <option value="Sunflower">Sunflower</option>
+                </select>
+              </div>
+
+              <!-- Soil Type -->
+              <div class="form-group">
+                <label data-i18n="label_soil_type">Soil Type</label>
+                <select name="Soil_Type" class="form-control" required>
+                  <option value="">-- Select Soil --</option>
+                  <option value="Loamy" selected>Loamy</option>
+                  <option value="Clay">Clay</option>
+                  <option value="Peaty">Peaty</option>
+                  <option value="Saline">Saline</option>
+                  <option value="Sandy">Sandy</option>
+                </select>
+              </div>
+
+              <!-- Target Desired Yield -->
+              <div class="form-group full-width">
+                <label>
+                  <span data-i18n="label_target_yield">Target Crop Yield</span>
+                  <span class="unit">(kg/ha)</span>
+                </label>
+                <input type="number" name="Crop_Yield" class="form-control" step="0.1" value="30.0" required />
+              </div>
+
+              <!-- City & Auto-fetch -->
+              <div class="form-group full-width">
+                <label data-i18n="label_location">Location (City for Live Weather)</label>
+                <div class="input-with-button">
+                  <input type="text" id="fertCityInput" class="form-control" placeholder="e.g. Kolkata, Delhi, London" value="Kolkata" />
+                  <button type="button" id="btnFetchFertWeather" class="btn-fetch" data-i18n="btn_fetch_weather">
+                    ⚡ Auto-Fetch Weather
+                  </button>
+                </div>
+                <div id="fertWeatherBadge" class="weather-status-badge"></div>
+              </div>
+
+              <!-- Weather Parameters -->
+              <div class="form-group">
+                <label>
+                  <span data-i18n="label_temp">Temperature</span>
+                  <span class="unit">(°C)</span>
+                </label>
+                <input type="number" name="Temperature" class="form-control" step="0.1" value="25.0" />
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <span data-i18n="label_humidity">Relative Humidity</span>
+                  <span class="unit">(%)</span>
+                </label>
+                <input type="number" name="Humidity" class="form-control" step="0.1" value="65.0" />
+              </div>
+
+              <div class="form-group full-width">
+                <label>
+                  <span data-i18n="label_wind">Wind Velocity</span>
+                  <span class="unit">(km/h)</span>
+                </label>
+                <input type="number" name="Wind_Speed" class="form-control" step="0.1" value="10.0" />
+              </div>
+            </div>
+
+            <button type="submit" id="btnFertSubmit" class="form-submit-btn" data-i18n="btn_recommend_fert">
+              🧪 Get Scientific N-P-K Recommendation
+            </button>
+          </form>
+        </div>
+
+        <!-- Result Display Card -->
+        <div class="glass-card result-panel">
+          <div id="fertEmptyState" class="empty-state">
+            <div class="empty-state-icon">🧪</div>
+            <p data-i18n="fert_empty_state">Enter target yield and soil conditions to generate fertilizer advice.</p>
+          </div>
+
+          <div id="fertResultDisplay" class="npk-result-display">
+            <!-- 3 Nutrient Cards -->
+            <div class="npk-grid">
+              <!-- Nitrogen -->
+              <div class="nutrient-card nitrogen">
+                <div class="nutrient-title" data-i18n="nutrient_n_title">Nitrogen (N)</div>
+                <div class="nutrient-val" id="fertOutputN">0.0</div>
+                <div class="nutrient-sub">kg/ha recommended</div>
+              </div>
+
+              <!-- Phosphorus -->
+              <div class="nutrient-card phosphorus">
+                <div class="nutrient-title" data-i18n="nutrient_p_title">Phosphorus (P)</div>
+                <div class="nutrient-val" id="fertOutputP">0.0</div>
+                <div class="nutrient-sub">kg/ha recommended</div>
+              </div>
+
+              <!-- Potassium -->
+              <div class="nutrient-card potassium">
+                <div class="nutrient-title" data-i18n="nutrient_k_title">Potassium (K)</div>
+                <div class="nutrient-val" id="fertOutputK">0.0</div>
+                <div class="nutrient-sub">kg/ha recommended</div>
+              </div>
+            </div>
+
+            <!-- Advice Box -->
+            <div class="advice-card">
+              <strong data-i18n="fert_advice_title">Application Guidance:</strong>
+              <p id="fertAdviceText" style="margin-top: 6px;">Optimal nutrient dosages generated by MultiOutput Random Forest ML model.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 4: LIVE WEATHER DASHBOARD
+    ========================================================= -->
+    <section id="tab-weather" class="tab-pane">
+      <div class="weather-dashboard-container">
+        <div class="glass-card text-center" style="text-align: center;">
+          <h2 class="card-title" style="justify-content: center;">
+            <span>🌤️</span>
+            <span data-i18n="weather_title">Live Meteorological Dashboard</span>
+          </h2>
+          <p class="card-subtitle" style="margin-bottom: 24px;" data-i18n="weather_subtitle">
+            Query live weather conditions from Open-Meteo for any farming region worldwide.
+          </p>
+
+          <div class="weather-search-bar">
+            <input type="text" id="dashCityInput" class="form-control" placeholder="Search City (e.g. Mumbai, New York, Tokyo)" value="Mumbai" />
+            <button type="button" id="btnSearchWeather" class="btn-primary" data-i18n="weather_search_btn">
+              Search Weather
+            </button>
+          </div>
+        </div>
+
+        <div class="weather-cards-grid">
+          <!-- City & Country -->
+          <div class="weather-metric-card">
+            <div class="weather-icon">📍</div>
+            <div class="weather-metric-val" id="dashCityDisplay">Mumbai, India</div>
+            <div class="weather-metric-label">Target Location</div>
+          </div>
+
+          <!-- Temperature -->
+          <div class="weather-metric-card">
+            <div class="weather-icon">🌡️</div>
+            <div class="weather-metric-val" id="dashTempDisplay">28.5 °C</div>
+            <div class="weather-metric-label" data-i18n="metric_temp">Temperature</div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="weather-metric-card">
+            <div class="weather-icon">💧</div>
+            <div class="weather-metric-val" id="dashHumDisplay">72.0 %</div>
+            <div class="weather-metric-label" data-i18n="metric_humidity">Relative Humidity</div>
+          </div>
+
+          <!-- Wind Velocity -->
+          <div class="weather-metric-card">
+            <div class="weather-icon">💨</div>
+            <div class="weather-metric-val" id="dashWindDisplay">12.4 km/h</div>
+            <div class="weather-metric-label" data-i18n="metric_wind">Wind Velocity</div>
+          </div>
+
+          <!-- Coordinates -->
+          <div class="weather-metric-card">
+            <div class="weather-icon">🛰️</div>
+            <div class="weather-metric-val" id="dashCoordDisplay">19.07°, 72.87°</div>
+            <div class="weather-metric-label" data-i18n="metric_coords">Coordinates</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 5: ML MODELS & ARCHITECTURE
+    ========================================================= -->
+    <section id="tab-about" class="tab-pane">
+      <div class="glass-card" style="margin-bottom: 30px;">
+        <h2 class="card-title">
+          <span>📊</span>
+          <span data-i18n="about_title">Machine Learning Architecture & Evaluation</span>
+        </h2>
+        <p class="card-subtitle" data-i18n="about_subtitle">
+          Complete technical breakdown of the trained scikit-learn models, data preprocessing pipeline, and validation benchmarks.
+        </p>
+
+        <div class="metric-pill-row">
+          <div class="metric-pill" id="metric-yield-r2">Yield R²: 0.9745</div>
+          <div class="metric-pill" id="metric-yield-rmse">Yield RMSE: 4.13 kg/ha</div>
+          <div class="metric-pill" id="metric-npk-r2">NPK MultiOutput R²: 1.0000</div>
+          <div class="metric-pill">Dataset: 36,520 Rows</div>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <!-- Yield Model Architecture -->
+        <div class="glass-card">
+          <h3 class="card-title" style="font-size: 1.35rem;" data-i18n="pipeline_yield_header">
+            1. Crop Yield Model (Random Forest Regressor)
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 8px;">
+            End-to-end scikit-learn Pipeline with ColumnTransformer:
+          </p>
+          <div class="code-box" style="margin-top: 12px;">
+Pipeline(steps=[
+  ('preprocessor', ColumnTransformer([
+     ('num', StandardScaler(), ['Temperature', 'Humidity', 'Wind_Speed', 'N', 'P', 'K']),
+     ('cat', OneHotEncoder(), ['Crop_Type', 'Soil_Type'])
+  ])),
+  ('regressor', RandomForestRegressor(n_estimators=100, random_state=42))
+])
+
+• Features: 8 (6 numeric, 2 categorical)
+• Target: Crop_Yield (Continuous kg/ha)
+• Evaluation R²: 0.9745 | RMSE: 4.1266 kg/ha
+          </div>
+        </div>
+
+        <!-- NPK Recommender Architecture -->
+        <div class="glass-card">
+          <h3 class="card-title" style="font-size: 1.35rem;" data-i18n="pipeline_npk_header">
+            2. N-P-K Recommender (Multi-Output Regressor)
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 8px;">
+            Reverse multi-target regression pipeline:
+          </p>
+          <div class="code-box" style="margin-top: 12px;">
+Pipeline(steps=[
+  ('preprocessor', ColumnTransformer([
+     ('num', StandardScaler(), ['Temperature', 'Humidity', 'Wind_Speed', 'Crop_Yield']),
+     ('cat', OneHotEncoder(), ['Crop_Type', 'Soil_Type'])
+  ])),
+  ('regressor', MultiOutputRegressor(RandomForestRegressor(n_estimators=100)))
+])
+
+• Features: 6 (Crop_Type, Soil_Type, Weather, Target Yield)
+• Targets: [Nitrogen (N), Phosphorus (P), Potassium (K)]
+• Overall Multi-Target R²: 1.0000
+          </div>
+        </div>
+      </div>
+
+      <!-- System Architecture Diagram -->
+      <div class="glass-card" style="margin-top: 30px;">
+        <h3 class="card-title" style="font-size: 1.35rem;" data-i18n="arch_flow_header">
+          System Architecture Flow
+        </h3>
+        <div class="code-box" style="margin-top: 14px;">
++---------------------------------------------------------------------------------------------------+
+|                                  BROWSER CLIENT (YieldSmart SPA)                                  |
+|   • Three.js 3D Background   • Bilingual i18n (EN/HI)   • Real-Time Weather Auto-Fill             |
++---------------------------------------------------------------------------------------------------+
+                                            │  HTTP Requests
+                                            ▼
++---------------------------------------------------------------------------------------------------+
+|                                      PYTHON FLASK BACKEND                                         |
+|   • GET  /api/health                 • GET  /api/feature-ranges                                    |
+|   • GET  /api/metrics                • GET  /api/weather?city=... (Open-Meteo Proxy)              |
+|   • POST /api/predict                • POST /api/recommend-fertilizer                             |
++---------------------------------------------------------------------------------------------------+
+                   │                                                   │
+                   ▼                                                   ▼
++------------------------------------+              +------------------------------------+
+|     yield_pipeline.pkl (Yield)     |              | reverse_yield_pipeline.pkl (NPK)   |
+|  • StandardScaler + OneHotEncoder  |              |  • StandardScaler + OneHotEncoder  |
+|  • RandomForestRegressor (R²~0.97) |              |  • MultiOutputRegressor (R²=1.00)  |
++------------------------------------+              +------------------------------------+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ⚓ Global Footer -->
+  <footer class="footer">
+    <p class="footer-highlight" data-i18n="footer_text">
+      AI-Powered Crop Yield Prediction and Optimization • College Project Demonstration
+    </p>
+    <p data-i18n="footer_mit">
+      Built with scikit-learn, Python Flask, Three.js & Open-Meteo.
+    </p>
+  </footer>
+
+  <!-- ⚙️ Main Application Script -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
