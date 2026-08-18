@@ -5,7 +5,6 @@
  */
 
 import { t, initI18n } from './i18n.js';
-import { ThreeAgricultureScene } from './three-bg.js';
 
 let featureRanges = {
   crop_types: ['Barley', 'Corn', 'Cotton', 'Potato', 'Rice', 'Soybean', 'Sugarcane', 'Sunflower', 'Tomato', 'Wheat'],
@@ -25,14 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize Multilingual Engine
   initI18n('en');
 
-  // 2. Initialize 3D Agriculture Scene
-  try {
-    new ThreeAgricultureScene('three-container');
-  } catch (err) {
-    console.warn('Three.js initialization notice:', err);
-  }
-
-  // 3. Setup Tab Navigation
+  // 2. Setup Tab Navigation
   setupNavigation();
 
   // 4. Populate default dropdowns and attempt backend sync

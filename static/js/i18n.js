@@ -80,8 +80,8 @@ export const translations = {
     arch_flow_header: "System Architecture Flow",
 
     // Footer
-    footer_text: "AI-Powered Crop Yield Prediction and Optimization • College Project Demonstration",
-    footer_mit: "Built with scikit-learn, Python Flask, Three.js & Open-Meteo."
+    footer_text: "AI-Powered Crop Yield Prediction and Optimization",
+    footer_mit: ""
   },
 
   hi: {
@@ -160,8 +160,8 @@ export const translations = {
     arch_flow_header: "सिस्टम आर्किटेक्चर प्रवाह",
 
     // Footer
-    footer_text: "AI-आधारित फसल उपज पूर्वानुमान एवं उर्वरक अनुकूलन • कॉलेज प्रोजेक्ट",
-    footer_mit: "scikit-learn, Python Flask, Three.js एवं Open-Meteo द्वारा निर्मित।"
+    footer_text: "AI-आधारित फसल उपज पूर्वानुमान एवं उर्वरक अनुकूलन",
+    footer_mit: ""
   }
 };
 
