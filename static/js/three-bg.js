@@ -1,6 +1,6 @@
 /**
  * three-bg.js
- * High-performance 3D Agricultural Particle & Molecule Background using Three.js
+ * Minimal & Elegant 3D Agricultural Topography Wave & Bio-Particle Background
  */
 
 import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
@@ -14,159 +14,119 @@ export class ThreeAgricultureScene {
     }
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    this.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
 
     this.mouseX = 0;
     this.mouseY = 0;
     this.targetMouseX = 0;
     this.targetMouseY = 0;
-
-    this.crops = [];
-    this.molecules = [];
+    this.clock = new THREE.Clock();
 
     this.init();
-    this.createBioParticles();
-    this.createCropNodes();
-    this.createNPKMolecules();
+    this.createTerrainMesh();
+    this.createGentleSpores();
     this.bindEvents();
     this.animate();
   }
 
   init() {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setClearColor(0x000000, 0);
     this.container.appendChild(this.renderer.domElement);
 
-    this.camera.position.z = 7;
-
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-    this.scene.add(ambientLight);
-
-    const dirLight = new THREE.DirectionalLight(0x34d399, 1.2);
-    dirLight.position.set(3, 5, 4);
-    this.scene.add(dirLight);
-
-    const blueLight = new THREE.PointLight(0x3b82f6, 1.5, 20);
-    blueLight.position.set(-5, -2, 2);
-    this.scene.add(blueLight);
+    // Position camera with angled perspective looking across the digital landscape
+    this.camera.position.set(0, 3.5, 9);
+    this.camera.rotation.x = -0.32;
   }
 
-  createBioParticles() {
-    const particleCount = 180;
+  createTerrainMesh() {
+    // Elegant undulating agricultural grid / topography mesh
+    const cols = 55;
+    const rows = 45;
+    const count = cols * rows;
     const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
 
-    const color1 = new THREE.Color(0x10b981); // Emerald
-    const color2 = new THREE.Color(0x3b82f6); // Sky blue
-    const color3 = new THREE.Color(0xa78bfa); // Purple
+    const c1 = new THREE.Color(0x059669); // Emerald green
+    const c2 = new THREE.Color(0x10b981); // Mint green
+    const c3 = new THREE.Color(0x0284c7); // Sky teal accent
 
-    for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 16;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    let idx = 0;
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const x = (j - cols / 2) * 0.48;
+        const z = (i - rows / 2) * 0.48;
+        const y = -1.8;
 
-      const pickColor = [color1, color2, color3][Math.floor(Math.random() * 3)];
-      colors[i * 3] = pickColor.r;
-      colors[i * 3 + 1] = pickColor.g;
-      colors[i * 3 + 2] = pickColor.b;
+        positions[idx * 3] = x;
+        positions[idx * 3 + 1] = y;
+        positions[idx * 3 + 2] = z;
+
+        // Gradient color based on depth
+        const mix = (i / rows) * 0.7 + (j / cols) * 0.3;
+        const col = c1.clone().lerp(c2, mix).lerp(c3, (1 - i / rows) * 0.4);
+        colors[idx * 3] = col.r;
+        colors[idx * 3 + 1] = col.g;
+        colors[idx * 3 + 2] = col.b;
+
+        idx++;
+      }
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.08,
+      size: 0.05,
       vertexColors: true,
       transparent: true,
-      opacity: 0.75
+      opacity: 0.38,
+      blending: THREE.AdditiveBlending
     });
 
-    this.particleCloud = new THREE.Points(geometry, material);
-    this.scene.add(this.particleCloud);
+    this.terrain = new THREE.Points(geometry, material);
+    this.terrainCols = cols;
+    this.terrainRows = rows;
+    this.scene.add(this.terrain);
   }
 
-  createCropNodes() {
-    const geom = new THREE.IcosahedronGeometry(0.12, 1);
-    const mat = new THREE.MeshPhongMaterial({
-      color: 0x10b981,
-      wireframe: true,
+  createGentleSpores() {
+    // Subtle, minimal drifting ambient bio-spores
+    const sporeCount = 50;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(sporeCount * 3);
+
+    for (let i = 0; i < sporeCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 16;
+      positions[i * 3 + 1] = Math.random() * 8 - 2;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const material = new THREE.PointsMaterial({
+      color: 0x34d399,
+      size: 0.035,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.25,
+      blending: THREE.AdditiveBlending
     });
 
-    for (let i = 0; i < 18; i++) {
-      const node = new THREE.Mesh(geom, mat);
-      node.position.set(
-        (Math.random() - 0.5) * 14,
-        (Math.random() - 0.5) * 10,
-        (Math.random() - 0.5) * 8
-      );
-      node.userData = {
-        speedY: Math.random() * 0.008 + 0.004,
-        rotSpeed: (Math.random() - 0.5) * 0.02,
-        initialY: node.position.y
-      };
-      this.crops.push(node);
-      this.scene.add(node);
-    }
-  }
-
-  createNPKMolecules() {
-    // 3 Compound cluster groups representing Nitrogen, Phosphorus, Potassium
-    const nutrientColors = [0x3b82f6, 0xf97316, 0x8b5cf6]; // N (Blue), P (Orange), K (Purple)
-
-    for (let i = 0; i < 12; i++) {
-      const group = new THREE.Group();
-      const color = nutrientColors[i % 3];
-      const atomMat = new THREE.MeshPhongMaterial({
-        color: color,
-        emissive: color,
-        emissiveIntensity: 0.3,
-        shininess: 90
-      });
-
-      // Core Atom
-      const coreGeom = new THREE.SphereGeometry(0.1, 12, 12);
-      const core = new THREE.Mesh(coreGeom, atomMat);
-      group.add(core);
-
-      // 2 Satellite mini-atoms
-      for (let s = 0; s < 2; s++) {
-        const satGeom = new THREE.SphereGeometry(0.05, 8, 8);
-        const sat = new THREE.Mesh(satGeom, atomMat);
-        const angle = s * Math.PI;
-        sat.position.set(Math.cos(angle) * 0.22, Math.sin(angle) * 0.22, 0);
-        group.add(sat);
-      }
-
-      group.position.set(
-        (Math.random() - 0.5) * 14,
-        (Math.random() - 0.5) * 10,
-        (Math.random() - 0.5) * 8
-      );
-
-      group.userData = {
-        floatSpeed: Math.random() * 0.01 + 0.005,
-        rotSpeedX: (Math.random() - 0.5) * 0.015,
-        rotSpeedY: (Math.random() - 0.5) * 0.015,
-        baseY: group.position.y
-      };
-
-      this.molecules.push(group);
-      this.scene.add(group);
-    }
+    this.spores = new THREE.Points(geometry, material);
+    this.sporeSpeeds = Array.from({ length: sporeCount }, () => Math.random() * 0.003 + 0.001);
+    this.scene.add(this.spores);
   }
 
   bindEvents() {
-    window.addEventListener('resize', () => this.handleResize());
     window.addEventListener('mousemove', (e) => {
-      this.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      this.targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      this.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 0.8;
+      this.targetMouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
     });
+
+    window.addEventListener('resize', () => this.handleResize());
   }
 
   handleResize() {
@@ -179,36 +139,42 @@ export class ThreeAgricultureScene {
   animate() {
     requestAnimationFrame(() => this.animate());
 
-    const time = Date.now() * 0.001;
+    const t = this.clock.getElapsedTime();
 
-    // Smooth mouse easing
-    this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
-    this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
+    // Smooth cursor parallax lerp
+    this.mouseX += (this.targetMouseX - this.mouseX) * 0.04;
+    this.mouseY += (this.targetMouseY - this.mouseY) * 0.04;
 
-    // Rotate Camera subtle parallax
-    this.camera.position.x = this.mouseX * 0.8;
-    this.camera.position.y = -this.mouseY * 0.6;
-    this.camera.lookAt(this.scene.position);
+    this.camera.position.x = this.mouseX * 2.0;
+    this.camera.position.y = 3.5 - this.mouseY * 1.2;
+    this.camera.lookAt(0, -0.8, 0);
 
-    // Particle Cloud slow rotation
-    if (this.particleCloud) {
-      this.particleCloud.rotation.y = time * 0.04;
-      this.particleCloud.rotation.x = time * 0.02;
+    // Subtle terrain ripple wave (like wind moving across crops)
+    if (this.terrain) {
+      const pos = this.terrain.geometry.attributes.position.array;
+      let idx = 0;
+      for (let i = 0; i < this.terrainRows; i++) {
+        for (let j = 0; j < this.terrainCols; j++) {
+          const x = pos[idx * 3];
+          const z = pos[idx * 3 + 2];
+          pos[idx * 3 + 1] = -1.8 + Math.sin(x * 0.45 + t * 0.75) * Math.cos(z * 0.35 + t * 0.55) * 0.32;
+          idx++;
+        }
+      }
+      this.terrain.geometry.attributes.position.needsUpdate = true;
     }
 
-    // Floating Crops
-    this.crops.forEach((crop, idx) => {
-      crop.rotation.x += crop.userData.rotSpeed;
-      crop.rotation.y += crop.userData.rotSpeed;
-      crop.position.y = crop.userData.initialY + Math.sin(time + idx) * 0.35;
-    });
-
-    // Floating NPK Molecules
-    this.molecules.forEach((mol, idx) => {
-      mol.rotation.x += mol.userData.rotSpeedX;
-      mol.rotation.y += mol.userData.rotSpeedY;
-      mol.position.y = mol.userData.baseY + Math.cos(time * 0.8 + idx) * 0.4;
-    });
+    // Gentle upward spore drift
+    if (this.spores) {
+      const pos = this.spores.geometry.attributes.position.array;
+      for (let i = 0; i < 50; i++) {
+        pos[i * 3 + 1] += this.sporeSpeeds[i];
+        if (pos[i * 3 + 1] > 6) {
+          pos[i * 3 + 1] = -2;
+        }
+      }
+      this.spores.geometry.attributes.position.needsUpdate = true;
+    }
 
     this.renderer.render(this.scene, this.camera);
   }
